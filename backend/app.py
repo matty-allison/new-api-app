@@ -53,8 +53,8 @@ def init_post_table():
 init_user_table()
 init_post_table()
 
-username_table = { u.username: u for u in users }
-userid_table = { u.id: u for u in users }
+username_table = {u.username: u for u in users}
+userid_table = {u.id: u for u in users}
 
 
 def authenticate(username, password):
@@ -165,10 +165,12 @@ def edit_post(post_id):
 
             if incoming_data.get("title") is not None:
                 put_data["title"] = incoming_data.get("title")
+
                 with sqlite3.connect('blog.db') as conn:
                     cursor = conn.cursor()
                     cursor.execute("UPDATE post SET title =? WHERE id=?", (put_data["title"], post_id))
                     conn.commit()
+
                     response['message'] = "Update was successfully"
                     response['status_code'] = 200
             if incoming_data.get("content") is not None:
